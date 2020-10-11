@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createConnect } from 'overmind-react';
+import React, { useEffect } from 'react';
 
-function App() {
+
+const connect = createConnect();
+
+
+function App({ overmind }) {
+  const { state, actions } = overmind;
+
+  useEffect(() => {
+    console.log(state);
+    console.log(actions);
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div>
+        <button onClick={actions.counter.increment}>+</button>
+        { state.counter.counter }
+        <button onClick={actions.counter.decrement}>-</button>
+      </div>
+      <br/>
+      <div>
+        <button onClick={actions.test.increment}>+</button>
+        { state.test.counter }
+        <button onClick={actions.test.decrement}>-</button>
+      </div>
     </div>
   );
 }
 
-export default App;
+export default connect(App);
